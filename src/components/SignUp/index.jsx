@@ -20,12 +20,13 @@ import { useNavigate } from "react-router-dom";
 import { useStringContext } from "../../context/StringContext";
 import Logo from "../Logo";
 import useStyles from "./style";
-import axios from "axios";
+import { useFirestoreContext } from "../../context/FirestoreContext";
 
 const SignUp = () => {
   // CONTEXT
   const { currentUser, signUp } = useAuthContext();
   const { globalString, signUpString } = useStringContext();
+  const { FIRESTORE_ADD } = useFirestoreContext();
 
   const classes = useStyles();
 
@@ -120,7 +121,8 @@ const SignUp = () => {
       };
 
       // Add new user data to firestore
-      await axios.post(`${import.meta.env.VITE_REST_URL}/signup`, data);
+      // await axios.post(`${import.meta.env.VITE_REST_URL}/signup`, data);
+      await FIRESTORE_ADD(data);
 
       // Navigate to homepage
       navigate("/");
