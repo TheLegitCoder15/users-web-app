@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { db } from "../config/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 
 const FirestoreContext = createContext();
 
@@ -32,6 +32,20 @@ export const FirestoreProvider = ({ children }) => {
       .finally(() => setLoading(false));
   };
 
-  const value = { FIRESTORE_ADD };
+  const FIRESTORE_GET = async () => {
+    const snapshot = await getDocs(collection(db, "users"));
+    let data = [];
+    if (!snapshot.empty) {
+      snapshot.forEach((doc) => {
+        data.push(doc.data());
+      });
+      return data;
+    } else {
+      console.error("No document found");
+      return;
+    }
+  };
+
+  const value = { FIRESTORE_ADD, FIRESTORE_GET };
   return <FirestoreContext.Provider value={value}>{!loading && children}</FirestoreContext.Provider>;
 };
