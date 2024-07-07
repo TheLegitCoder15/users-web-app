@@ -121,7 +121,6 @@ const SignUp = () => {
       };
 
       // Add new user data to firestore
-      // await axios.post(`${import.meta.env.VITE_REST_URL}/signup`, data);
       await FIRESTORE_ADD(data);
 
       // Navigate to homepage

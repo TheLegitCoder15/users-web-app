@@ -4,10 +4,12 @@ import { useAuthContext } from "../../context/AuthContext";
 import PrivateRoute from "../../util/PrivateRoute";
 import axios from "axios";
 import useStyles from "./style";
+import { useFirestoreContext } from "../../context/FirestoreContext";
 
 const Home = () => {
-  // AUTH CONTEXT
+  // CONTEXT
   const { currentUser } = useAuthContext();
+  const { FIRESTORE_GET } = useFirestoreContext();
 
   // STYLES
   const classes = useStyles();
@@ -17,18 +19,22 @@ const Home = () => {
 
   useEffect(() => {
     // GET ALL USERS ON MOUNT
-    const getAllUsers = async () => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_REST_URL}/Users`, {
-          headers: { Authorization: `${currentUser.accessToken}` },
-        });
-        setUsers([...res.data]);
-      } catch (error) {
-        console.error("Error Fetching Users: ", error.message);
-      }
-    };
-
-    getAllUsers();
+    // const getAllUsers = async () => {
+    // try {
+    //   const res = await axios.get(`${import.meta.env.VITE_REST_URL}/Users`, {
+    //     headers: { Authorization: `${currentUser.accessToken}` },
+    //   });
+    //   setUsers([...res.data]);
+    // } catch (error) {
+    //   console.error("Error Fetching Users: ", error.message);
+    // }
+    // };
+    // getAllUsers();
+    FIRESTORE_GET()
+      .then((data) => {
+        setUsers(data);
+      })
+      .catch((error) => console.error(error));
   }, [currentUser]);
 
   return (
