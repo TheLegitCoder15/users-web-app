@@ -6,6 +6,7 @@ import StringProvider from "./context/StringContext";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import Users from "./components/Users";
+import AccountSettings from "./components/AccountSettings";
 
 function App() {
   const { currentUser } = useAuthContext();
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/settings" element={<AccountSettings />} />
         </Routes>
       </Router>
     </StringProvider>
