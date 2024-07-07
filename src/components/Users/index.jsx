@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import PrivateRoute from "../../util/PrivateRoute";
 import { Table, TableCell, TableRow, TableHead, TableBody } from "@mui/material";
-import axios from "axios";
+import { useFirestoreContext } from "../../context/FirestoreContext";
 
 const Users = () => {
   // AUTH CONTEXT
   const { currentUser } = useAuthContext();
+  const { FIRESTORE_GET } = useFirestoreContext();
 
   // TABLE HOOKS & CONSTANTS
   const [users, setUsers] = useState([]);
@@ -14,18 +15,11 @@ const Users = () => {
 
   useEffect(() => {
     // GET ALL USERS ON MOUNT
-    const getAllUsers = async () => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_REST_URL}/Users`, {
-          headers: { Authorization: currentUser.accessToken },
-        });
-        setUsers([...res.data]);
-      } catch (error) {
-        console.error("Error Fetching Users:", error);
-      }
-    };
-
-    getAllUsers();
+    FIRESTORE_GET()
+      .then((data) => {
+        setUsers(data);
+      })
+      .catch((error) => console.error(error));
   }, [currentUser]);
   return (
     <PrivateRoute>
