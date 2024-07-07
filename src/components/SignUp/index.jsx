@@ -24,7 +24,7 @@ import { useFirestoreContext } from "../../context/FirestoreContext";
 
 const SignUp = () => {
   // CONTEXT
-  const { currentUser, signUp } = useAuthContext();
+  const { currentUser, signUp, update } = useAuthContext();
   const { globalString, signUpString } = useStringContext();
   const { FIRESTORE_ADD } = useFirestoreContext();
 
@@ -110,6 +110,7 @@ const SignUp = () => {
 
       // Sign up with Firebase Auth
       const newUser = await signUp(email, password);
+      await update(newUser.user, firstName, lastName);
 
       // Data to send to server
       const data = {

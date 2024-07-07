@@ -3,6 +3,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useStringContext } from "../../context/StringContext";
 import React, { useState } from "react";
 import useStyles from "./style";
+import { Link } from "react-router-dom";
 
 const ProfileIcon = ({ photoUrl, accounts, handleLogout }) => {
   // NAVBAR STRING CONTEXT
@@ -35,7 +36,7 @@ const ProfileIcon = ({ photoUrl, accounts, handleLogout }) => {
         className={classes.userMenu}
       >
         {accounts.map((account) => (
-          <MenuItem key={account.page} onClick={handleCloseProfileMenu}>
+          <MenuItem key={account.page} onClick={handleCloseProfileMenu} component={Link} to={account.href}>
             <ListItemIcon>{account.icon}</ListItemIcon>
             <ListItemText primary={account.page} />
           </MenuItem>

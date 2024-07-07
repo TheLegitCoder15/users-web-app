@@ -2,7 +2,6 @@ import { Card, Box, CardContent, Typography, CardHeader, Divider } from "@mui/ma
 import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import PrivateRoute from "../../util/PrivateRoute";
-import axios from "axios";
 import useStyles from "./style";
 import { useFirestoreContext } from "../../context/FirestoreContext";
 

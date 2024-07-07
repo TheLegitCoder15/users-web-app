@@ -13,7 +13,6 @@ import {
   ListItemText,
   Typography,
   ListItemIcon,
-  ListItemSecondaryAction,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
@@ -41,7 +40,6 @@ const Navbar = (props) => {
 
   //   NAVBAR STATE
   const [open, setOpen] = useState(false);
-  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const { window } = props;
   const container = window !== undefined ? () => window().document.body : undefined;
@@ -114,7 +112,12 @@ const Navbar = (props) => {
                   <Typography className={classes.navTitle}>Navigation</Typography>
                   {pages.map((item) => (
                     <ListItem key={item.page} disablePadding>
-                      <ListItemButton className={classes.navItem} component={Link} to={item.href}>
+                      <ListItemButton
+                        onClick={() => setOpen(false)}
+                        className={classes.navItem}
+                        component={Link}
+                        to={item.href}
+                      >
                         <ListItemIcon>{item.icon}</ListItemIcon>
                         <ListItemText primary={item.page} />
                       </ListItemButton>
@@ -123,7 +126,12 @@ const Navbar = (props) => {
                   <Typography className={classes.navTitle}>Account</Typography>
                   {accounts.map((account) => (
                     <ListItem key={account} disablePadding>
-                      <ListItemButton className={classes.navItem} component={Link} to={account.href}>
+                      <ListItemButton
+                        onClick={() => setOpen(false)}
+                        className={classes.navItem}
+                        component={Link}
+                        to={account.href}
+                      >
                         <ListItemIcon>{account.icon}</ListItemIcon>
                         <ListItemText primary={account.page} />
                       </ListItemButton>
